@@ -1,21 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View, Button } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './src/screens/LoginScreen';
+import MainScreen from './src/screens/MainScreen';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const Stack = createStackNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const defaultStackOptions = {
+  cardStyle: {
+    backgroundColor: '#FFF',
   },
-});
+  headerStyle: {
+    backgroundColor: 'green',
+  },
+  headerTintColor: 'white',
+};
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name='Login'
+          component={LoginScreen}
+          options={{
+            ...defaultStackOptions,
+          }}
+        />
+        <Stack.Screen
+          name='Main'
+          component={MainScreen}
+          options={{
+            ...defaultStackOptions,
+            headerTitle: '메인 페이지',
+            headerRight: () => <Text>아이콘</Text>,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
